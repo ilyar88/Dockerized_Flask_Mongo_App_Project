@@ -13,32 +13,44 @@ def get_db():
                          username='root', 
                          password='pass',
                         authSource="admin")
-    db = client["people_db"]
+    db = client["movie_db"]
     return db
 
 @app.route('/search')
 def search():
     query = request.args.get('query')
-    json_list = []
     TMDb.api_key=''
     tmdb.language = 'en'
     tmdb.debug = True
     movie=Movie()
     similar = movie.search(query)
-    with open('sample.json', 'w' ,encoding='utf-8') as f:
-        for line in similar:
-            f.write(f"{line}\n")
+    dictionary = { "poster_path" : stu.poster_path for stu in similar } 
+    with open('sample.json', 'w') as file:
+     file.write(json.dumps(dictionary))
     return "Welcome!"
 
-@app.route('/people_db')
-def get_stored_people_db():
+@app.route('/remove')
+def remove():
+    query = request.args.get('query')
     db = get_db()
-    with open('sample.json' ,encoding='utf-8') as file:
-        file_data = json.load(file)
-     
-    Collection = db["people_db"]
+    Collection = db["movie_db"]
+    Collection.delete_one(query)
 
-    Collection.insert_many(file_data)
+@app.route('/movies')
+def movies():
+    db = get_db()
+    with open('sample.json') as file:
+        file_data = json.load(file)
+
+    collection = db["movie_db"]
+
+    collection.insert_one(file_data)
+    _movie = db.movie_db.find()
+    movie = [{"poster_path": m["poster_path"]} for m in _movie]
+    return jsonify({"poster_path": movie})
     
 if __name__=='__main__':
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0",debug=True, port=5000)
+
+
+
