@@ -1,7 +1,7 @@
 services:
   app:
     build: .
-    command: flask run
+    command: python -u app.py
     ports:
       - "5000:5000"
     volumes:
