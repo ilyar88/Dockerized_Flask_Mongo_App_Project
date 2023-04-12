@@ -26,10 +26,10 @@ def index():
     tmdb.debug = True
     movie=Movie()
     similar = movie.search(query)
-    dictionary = { "poster_path" : query + ": " + stu.poster_path for stu in similar } 
+    dictionary = { "poster_path" : stu.poster_path for stu in similar } 
     with open('sample.json', 'w') as file:
      file.write(json.dumps(dictionary))
-    return render_template("index.html",Search=query)
+    return render_template("index.html",image="https://image.tmdb.org/t/p/original/" + str(dictionary["poster_path"]))
 
 @app_blueprint.route('/remove')
 def remove():
