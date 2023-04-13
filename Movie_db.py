@@ -4,7 +4,6 @@ from tmdbv3api import TMDb
 from tmdbv3api import Movie
 from connect_mongodb import connect_mongodb
 from dotenv import load_dotenv
-load_dotenv()
 
 import os
 
@@ -18,6 +17,7 @@ class Movie_db():
         return True
     
     def search_movie(query):
+        load_dotenv()
         tmdb=TMDb()
         TMDb.api_key = os.getenv("API_KEY")
         tmdb.language = 'en'
@@ -41,21 +41,24 @@ class Movie_db():
         for record in dictionary.values():
             collection.delete_one({'poster_path': record}) 
         else:
-            similar = request.args.get('query')
-        collection.delete_one({'poster_path': similar})
+            similar = query
+            collection.delete_one({'poster_path': similar})
 
     def update_data(query,value):
+        load_dotenv()
+        TMDb.api_key = os.getenv("API_KEY")
+
         movie=Movie()
         similar = movie.search(query)
-        value = value
         dictionary = { "poster_path" : stu.poster_path for stu in similar }
         db = connect_mongodb.get_db()
         collection = db["movie_db"]
         for record in dictionary.values():
             movie_id = collection.find_one({"poster_path": record})
+            collection.update_one({"_id": movie_id["_id"]},{"$set": {"poster_path": value}})     
         else:
-            similar = query
-            movie_id = collection.find_one({"poster_path": similar})
+            movie_id = collection.find_one({"poster_path": query})
+            collection.update_one({"_id": movie_id["_id"]},{"$set": {"poster_path": value}})
+        
 
-        collection.update_one({"_id": movie_id["_id"]},{"$set": {"poster_path": value}})
 
