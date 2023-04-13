@@ -1,2 +1,4 @@
 flask
 pymongo
+tmdbv3api
+python-dotenv

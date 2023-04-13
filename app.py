@@ -1,10 +1,8 @@
-from pymongo import MongoClient
+from flask import Flask
+from app_blueprint import app_blueprint
 
-client = MongoClient(
-          host='test_mongodb',
-          port=27017,
-          username='root',
-          password='pass', 
-          authSource="admin")    
-db = client.users
-records = db.register
+app = Flask(__name__)
+app.register_blueprint(app_blueprint)
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", debug=True)
