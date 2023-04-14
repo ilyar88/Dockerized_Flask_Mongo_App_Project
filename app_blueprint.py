@@ -15,8 +15,6 @@ def index():
             else:
                 temp = dictionary
 
-        src = "https://image.tmdb.org/t/p/original/"
-        movie_name = str(temp["poster_path"])
         return render_template("index.html",image="https://image.tmdb.org/t/p/original/" + str(temp["poster_path"]))
     except:
         return render_template("index.html")
