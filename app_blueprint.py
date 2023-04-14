@@ -3,17 +3,20 @@ from Movie_db import Movie_db
 
 app_blueprint = Blueprint('app_blueprint',__name__)
 
-@app_blueprint.route('/')
+@app_blueprint.route('/search',methods=['GET', 'POST'])
 def index():
     try:
-        similar = Movie_db.search_movie(query=request.args.get('query'))
-        dictionary = { "poster_path" : stu.poster_path for stu in similar }
-        if Movie_db.search_value(dictionary):
-            Movie_db.insert_data(dictionary)
-            temp = dictionary
-        else:
-            temp = dictionary
+        if request.method == 'POST': 
+            similar = Movie_db.search_movie(request.form['name'])
+            dictionary = { "poster_path" : stu.poster_path for stu in similar }
+            if Movie_db.search_value(dictionary):
+                Movie_db.insert_data(dictionary)
+                temp = dictionary
+            else:
+                temp = dictionary
 
+        src = "https://image.tmdb.org/t/p/original/"
+        movie_name = str(temp["poster_path"])
         return render_template("index.html",image="https://image.tmdb.org/t/p/original/" + str(temp["poster_path"]))
     except:
         return render_template("index.html")

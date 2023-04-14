@@ -8,18 +8,31 @@
 </head>
 <body>
 <header> 
-    <form id="form">
-    <input type="text" placeholder="Search" id="search" class="search">
+    <div id="container">
+        <div class="form">
+            <h1 style="font-family:Matura MT Script Capitals" align="center">Welcome to team 2 App</h1>
+
+            <form action="/search" method="post">
+
+                <div id="inform">
+
+                <div id="input-1">
+                    <br>
+                    <input  placeholder="&#128269Insert Movie Name" type="text" name="name" id='name' required>
+                </div>
+                <br>
+                    <input  id="div-submit" type="submit" value="submit">
+                </div>
     </form>
+        </div>
 </header>
 <main id="main">
     <div class="movie">
-        <img src= {{image}} alt="Image">
+        <img src= {{image}} alt="Image" width="800" height="800">
     </div>
 
 
  </main>
 
-<script src="script.js"></script>
 </body>
 </html>
