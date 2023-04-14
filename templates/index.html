@@ -10,21 +10,52 @@
 <header> 
     <div id="container">
         <div class="form">
-            <h1 style="font-family:Matura MT Script Capitals" align="center">Welcome to team 2 App</h1>
-
+            <h1 style="font-family:Matura MT Script Capitals" align="left">Welcome to team 2 App</h1>
+            
             <form action="/search" method="post">
 
                 <div id="inform">
 
                 <div id="input-1">
                     <br>
-                    <input  placeholder="&#128269Insert Movie Name" type="text" name="name" id='name' required>
+                    <input  placeholder="&#128269Insert movie name" type="text" name="name" id='name' required>
                 </div>
                 <br>
                     <input  id="div-submit" type="submit" value="submit">
                 </div>
     </form>
         </div>
+        <div class="form">           
+            <form action="/remove" method="post">
+
+                <div id="inform">
+
+                <div id="input-1">
+                    <br>
+                    <input  placeholder="&#128269Remove movie" type="text" name="name" id='name' required>
+                </div>
+                <br>
+                    <input  id="div-submit" type="submit" value="submit">
+                </div>
+    </form>
+        </div>
+    </form>
+</div>
+<div class="form">           
+    <form action="/update" method="post">
+
+        <div id="inform">
+
+        <div id="input-1">
+            <br>
+            <input  placeholder="&#128269Movie name" type="text" name="name1" id='name' required>
+            <input  placeholder="&#128269Update move" type="text" name="name2" id='name' required>
+        </div>
+        <br>
+            <input  id="div-submit" type="submit" value="submit">
+        </div>
+</form>
+</div>
 </header>
 <main id="main">
     <div class="movie">
