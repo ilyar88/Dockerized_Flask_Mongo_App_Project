@@ -19,28 +19,25 @@ def index():
     except:
         return render_template("index.html")
 
-@app_blueprint.route('/remove')
+@app_blueprint.route('/remove',methods=['GET', 'POST'])
 def remove():
     try:
-        similar = request.args.get('query')
-        Movie_db.remove_data(similar)
+        if request.method == 'POST': 
+            similar = request.form['name']
+            Movie_db.remove_data(similar)
 
-        return render_template("index.html")
+            return render_template("index.html")
     except:
         return render_template("index.html")
 
-@app_blueprint.route('/update')
+@app_blueprint.route('/update',methods=['GET', 'POST'])
 def update_data():
         try:
-            similar = request.args.get('query')
-            value = request.args.get('value')
-            Movie_db.update_data(similar,value)
+            if request.method == 'POST':
+                similar = request.form['name1']
+                value = request.form['name2']
+                Movie_db.update_data(similar,value)
             
-            return render_template("index.html")
+                return render_template("index.html")
         except:
             return render_template("index.html") 
-
-    
-    
-
-
