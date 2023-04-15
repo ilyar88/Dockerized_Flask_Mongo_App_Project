@@ -4,7 +4,6 @@ from tmdbv3api import TMDb
 from tmdbv3api import Movie
 from connect_mongodb import connect_mongodb
 from dotenv import load_dotenv
-
 import os
 
 class Movie_db():  
