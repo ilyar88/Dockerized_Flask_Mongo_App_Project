@@ -37,7 +37,12 @@ def update_data():
                 similar = request.form['name1']
                 value = request.form['name2']
                 Movie_db.update_data(similar,value)
-            
-                return render_template("index.html")
+                dictionary = Movie_db.search_movie(request.form['name2'])
+                temp = { "poster_path" : stu.poster_path for stu in dictionary }
+
+                return render_template("index.html",image="https://image.tmdb.org/t/p/original/" + str(temp["poster_path"]))
         except:
-            return render_template("index.html") 
+            dictionary = Movie_db.search_movie(request.form['name2'])
+            temp = { "poster_path" : stu.poster_path for stu in dictionary }
+            
+            return render_template("index.html",image="https://image.tmdb.org/t/p/original/" + str(temp["poster_path"]))
