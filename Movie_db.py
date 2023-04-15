@@ -35,8 +35,7 @@ class Movie_db():
         collection = db["movie_db"]
 
         movie=Movie()
-        similar = movie.search(query)
-        dictionary = { "poster_path" : stu.poster_path for stu in similar }
+        dictionary = { "poster_path" : stu.poster_path for stu in movie.search(query) }
         for record in dictionary.values():
             collection.delete_one({'poster_path': record}) 
         else:
@@ -48,16 +47,13 @@ class Movie_db():
         TMDb.api_key = os.getenv("API_KEY")
 
         movie=Movie()
-        similar = movie.search(query)
-        dictionary = { "poster_path" : stu.poster_path for stu in similar }
+        dictionary = { "poster_path" : stu.poster_path for stu in movie.search(query) }
+        update = { "poster_path" : stu.poster_path for stu in movie.search(value) }
         db = connect_mongodb.get_db()
         collection = db["movie_db"]
         for record in dictionary.values():
             movie_id = collection.find_one({"poster_path": record})
-            collection.update_one({"_id": movie_id["_id"]},{"$set": {"poster_path": value}})     
+            collection.update_one({"_id": movie_id["_id"]},{"$set": {"poster_path": update["poster_path"]}})     
         else:
             movie_id = collection.find_one({"poster_path": query})
-            collection.update_one({"_id": movie_id["_id"]},{"$set": {"poster_path": value}})
-        
-
-
+            collection.update_one({"_id": movie_id["_id"]},{"$set": {"poster_path": update["poster_path"]}})
