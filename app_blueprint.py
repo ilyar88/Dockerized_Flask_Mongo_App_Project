@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, render_template, request
+from flask import Blueprint,render_template, request
 from Movie_db import Movie_db
 
 app_blueprint = Blueprint('app_blueprint',__name__)
