@@ -1,5 +1,3 @@
-from flask import render_template, request
-from pymongo import MongoClient
 from tmdbv3api import TMDb
 from tmdbv3api import Movie
 from connect_mongodb import connect_mongodb
