@@ -1,2 +1,6 @@
-DevOps Project: 
-Using Python and MongoDB with Docker Compose and a Dockerfile packaged in a container
+This project include:
+1. Python
+2. Bash
+3. MongoDB
+4. Docker compose
+5. Dockerfile
