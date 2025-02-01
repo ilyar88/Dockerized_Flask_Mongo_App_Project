@@ -1,19 +1,51 @@
 #! /bin/bash
+
+# Update the system packages to the latest version
 sudo yum update -y
+
+# Install Docker package
 sudo yum install docker -y
+
+# Install Docker using Amazon Linux Extras (if it's not already installed)
 sudo amazon-linux-extras install docker -y
+
+# Start the Docker service
 sudo systemctl start docker
+
+# Add the ec2-user to the Docker group to allow it to run Docker commands without sudo
 sudo usermod -a -G docker ec2-user
+
+# Enable Docker to start on boot
 sudo systemctl enable docker
+
+# Download Docker Compose binary from the official GitHub repository and place it in /usr/local/bin
 sudo curl -SL https://github.com/docker/compose/releases/download/v2.4.1/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
+
+# Make the Docker Compose binary executable
 sudo chmod +x /usr/local/bin/docker-compose
+
+# Create a symbolic link to docker-compose in /usr/bin so it's accessible from anywhere in the system
 sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+
+# Install Git to clone the project repository
 sudo yum install git -y
+
+# Clone the Flask Mongo App project repository from GitHub
 sudo git clone https://github.com/ilya-rahmilevich/Dockerized_Flask_Mongo_App_Project.git
+
+# Change directory to the cloned project folder
 cd /Dockerized_Flask_Mongo_App_Project
+
+# Change the ownership of the project files to ec2-user
 sudo chown -R ec2-user:ec2-user /Dockerized_Flask_Mongo_App_Project/
+
+# Add the necessary environment variables (API key, username, password) to the .env file
 sudo echo "API_KEY='<api_key>'" >> .env
 sudo echo "USERNAME='<username>'" >> .env
 sudo echo "PASSWORD='<password>'" >> .env
+
+# Build the Docker containers defined in the docker-compose.yml file
 sudo docker-compose build
+
+# Start the containers in detached mode
 sudo docker-compose up -d
