@@ -1,19 +1,42 @@
+version: '3.8'
+
 services:
+  # 'app' service that runs the Flask application
   app:
+    # Build the Docker image from the current directory (Dockerfile should be present)
     build: .
+    
+    # Command to run when the container starts. It runs the Flask app using python.
     command: python -u app.py
+    
+    # Exposes port 5000 on the host machine and maps it to port 5000 in the container
     ports:
       - "5000:5000"
+    
+    # Mounts the current directory on the host machine to the '/app' directory inside the container.
+    # This allows the app code to be updated live without rebuilding the container.
     volumes:
       - .:/app
+    
+    # Links this container with the 'db' service (MongoDB), enabling communication between them.
     links:
       - db
+
+  # 'db' service that runs the MongoDB database
   db:
+    # Use the latest MongoDB image from Docker Hub
     image: mongo:latest
+    
+    # Sets the hostname for the container to 'test_mongodb'
     hostname: test_mongodb
+    
+    # Environment variables to initialize MongoDB with a specific database and root user credentials
     environment:
-      - MONGO_INITDB_DATABASE=movie_db
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=pass
+      - MONGO_INITDB_DATABASE=movie_db        # Initial database name
+      - MONGO_INITDB_ROOT_USERNAME=root       # Root username
+      - MONGO_INITDB_ROOT_PASSWORD=pass      # Root password
+    
+    # Exposes port 27017 on the host machine and maps it to port 27017 inside the container (default MongoDB port)
     ports:
       - 27017:27017
+
